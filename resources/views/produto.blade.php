@@ -4,96 +4,21 @@
     <meta charset    = "UTF-8">
     <meta name       = "viewport" content        = "width=device-width, initial-scale=1.0">
     <meta http-equiv = "X-UA-Compatible" content = "ie=edge">
+    <link rel="stylesheet" href="css/produtoBlade.css">
+    <link rel="stylesheet" href="javascript/scripts.js">
     <link href = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel = "stylesheet" integrity = "sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin = "anonymous">
 
     <title>Document</title>
 </head>
 <body>
-{{-- Estilos --}}
-<style>
-body{
-        font-family     : 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', Verdana, sans-serif;
-        background-color: #F0F8FF
-    }
-
-    header {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-
-        /* Estilos para o título */
-        h1 {
-            margin: 0;
-        }
-
-        /* Estilos para a descrição */
-        p {
-            margin: 5px 0 0 0;
-        }
-        .container {
-        background: linear-gradient(to bottom right, #FFBF00, #FF7F00);
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        color: #333;
-        font-family: Arial, sans-serif;
-        margin-top: 5%;
-    }
-
-    h1 {
-          /* Mantive os estilos do seu h1 */
-        text-align   : center;
-        font-size    : 2em;
-        color        : #fff;
-        margin-bottom: 20px;
-    }
-
-    .linkbtn{
-    display        : flex;
-    width          : 100%;
-    justify-content: center;
-    }
-
-    label {
-        display: block;
-        margin-top: 10px;
-    }
-
-    select,
-    input {
-        width: 100%;
-        padding: 10px;
-        margin-top: 5px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
-
-    button {
-        width: 100%;
-        padding: 10px;
-        margin-top: 20px;
-        border: none;
-        border-radius: 5px;
-        background-color: #FF7F00;
-        color: #fff;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #FFBF00;
-    }
-
-</style>
 
 <header>
     <h1>Estoque de Materiais</h1>
     <p>Jonathan</p>
-    <div class="linkbtn">
-   <button type="button" class="btn btn-light"> <a href = "/marcas">Marcas</a> </button>
-   <button type="button" class="btn btn-light"> <a href = "/estoque">Estoque</a> </button>
-   <button type="button" class="btn btn-light"> <a href = "/produto">Produto</a> </button>
+   <div    class = "linkbtn">
+   <button type  = "button" class = "btn btn-light"> <a href = "/marcas">Marcas</a> </button>
+   <button type  = "button" class = "btn btn-light"> <a href = "/estoque">Estoque</a> </button>
+   <button type  = "button" class = "btn btn-light"> <a href = "/produto">Produto</a> </button>
     </div>
 </header>
 
@@ -135,33 +60,44 @@ body{
 
 <br>
 
-<script>
+<footer>
+    <div>
+        <h3>Estoque de Materiais</h3>
+        <a>Estoque de materiais onde havera todos os itens cadastrados</a>
+    </div>
+    <div class="redes-sociais">
+        <img src="img/instagram.png" alt="Instagram">
+        <img src="img/facebook.png" alt="Facebook">
+        <img src="img/github.png" alt="Github">
+    </div>
+</footer>
 
-document.addEventListener('DOMContentLoaded', function() {
-    const selectMarcas = document.querySelector('.select-marcas');
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+  const selectMarcas = document.querySelector('.select-marcas');
       // Seleciona o elemento select com a classe 'select-marcas'
 
       // Event listener para o evento 'change' do select
-    selectMarcas.addEventListener('change', function() {
-        const selectTipo       = document.querySelector('.select-tipo');
-        const marcaSelecionada = this.value;                              // Valor selecionado no select
+  selectMarcas.addEventListener('change', function() {
+      const selectTipo       = document.querySelector('.select-tipo');
+      const marcaSelecionada = this.value;                              // Valor selecionado no select
           // Faz a requisição à rota desejada com o valor da marca
-        fetch(`/produto/${marcaSelecionada}`)
-            .then(response => response.json())
-            .then(data => {
-                selectTipo.innerHTML = '<option value="" selected>Selecione o tipo</option>';
-                data.forEach(tipo => {
-                    selectTipo.innerHTML += `<option value="${tipo.id}">${tipo.tipo}</option>`;
-                });
+      fetch(`/produto/${marcaSelecionada}`)
+          .then(response => response.json())
+          .then(data => {
+              selectTipo.innerHTML = '<option value="" selected>Selecione o tipo</option>';
+              data.forEach(tipo => {
+                  selectTipo.innerHTML += `<option value="${tipo.id}">${tipo.tipo}</option>`;
+              });
                   // Aqui você pode fazer algo com os dados retornados, como preencher outro select
-            })
-            .catch(error => {
-                console.error('Erro ao fazer requisição:', error);
-            });
-    });
+          })
+          .catch(error => {
+              console.error('Erro ao fazer requisição:', error);
+          });
+  });
 });
-</script>
 
+</script>
 <script src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity = "sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin = "anonymous"></script>
 
 </body>

@@ -8,40 +8,30 @@ use Illuminate\Http\Request;
 
 class EstoqueController extends Controller
 {
-          // Index: recupera registros do banco
-    public function index()
-    {
-              // Vou retornar os dados da tabela estoque
-        $produtos = Produtos::all();
-        $marcas   = Marcas::all();
+      public function index()
+      {
+          // Vou retornar os dados da tabela estoque
+          $produtos = Produtos::all();
+          $marcas = Marcas::all();
 
-              // criando um array pra armazenar um novo tipo de produto para o contador
-        $countTipo = [];
+          // criando um array pra armazenar um novo tipo de produto para o contador
+          $countTipos = [];
 
-              // Busca os tipos únicos de produtos
-        $tiposUnicos = $marcas->pluck('tipo')->unique();
+          // Busca os tipos únicos de produtos
+          $tiposUnicos = $marcas->pluck('tipo')->unique();
 
-              // Contagem de produtos por tipo
-        foreach ($tiposUnicos as $tipo) {
-            $countTipos[$tipo] = Produtos::join('marcas', 'produtos.marca_id', '=', 'marcas.id')
-                                        ->where('marcas.tipo', $tipo)
-                                        ->count();
-        }
+          // Contagem de produtos por tipo
+          foreach ($tiposUnicos as $tipo) {
+              $countTipos[$tipo] = Produtos::join('marcas', 'produtos.marca_id', '=', 'marcas.id')
+                  ->where('marcas.tipo', $tipo)
+                  ->count();
+          }
 
-        // Para cada produto, obtemos a marca associada e contamos
-        $produtos->each(function ($produto) use (&$countProdutosPorTipo, $marcas) {
-            // Obtém a marca associada ao produto
-            $marca = $marcas->firstWhere('id', $produto->marca_id);
+          
+          // Passa as variáveis para a view
+          return view('estoque', compact('produtos', 'marcas', 'countTipos'));
+      }
 
-            if ($marca) {
-                // Incrementa a contagem para o tipo de marca
-                    $produto->tipo = $marca->tipo;
-            }
-        });
-
-              // Passa as variáveis para a view
-        return view('estoque', compact('produtos', 'marcas', 'countTipos'));
-    }
     public function store(Request $request)
     {
 

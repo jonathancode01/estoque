@@ -4,37 +4,12 @@
     <meta charset    = "UTF-8">
     <meta name       = "viewport" content        = "width=device-width, initial-scale=1.0">
     <meta http-equiv = "X-UA-Compatible" content = "ie=edge">
+    <link rel="stylesheet" href="css/marcasBlade.css">
     <link href = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel = "stylesheet" integrity = "sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin = "anonymous">
 
     <title>Document</title>
 </head>
 <body>
-{{-- Estilos --}}
-<style>
-body{
-        font-family     : 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', Verdana, sans-serif;
-        background-color: #F0F8FF;
-    }
-
-    header {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-
-        /* Estilos para o título */
-        h1 {
-            margin: 0;
-        }
-
-        /* Estilos para a descrição */
-        p {
-            margin: 5px 0 0 0;
-        }
-
-</style>
-
 <header>
     <h1>Estoque de Materiais</h1>
     <p>Jonathan</p>
@@ -43,19 +18,19 @@ body{
    <button type="button" class="btn btn-light"> <a href = "/estoque">Estoque</a> </button>
    <button type="button" class="btn btn-light"> <a href = "/produto">Produto</a> </button>
 </header>
-{{-- Fim Estios --}}
 
+<div class="formMarca">
 <form action = "/marcas" method = "POST">
     @csrf
     <label for = "marcas">Marcas: </label>
+    <div class="inputMarca">
     <input id  = "marcas" type = "text" name = "marcas" placeholder = "Digite a marca">
     <br>
     <label for  = "marcas">Tipo: </label>
     <input type = "text" name = "tipo" id = "tipo" placeholder = "Digite a marca">
+    </div>
     <br>
-    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Enviar
-      </button>
+    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Enviar</button>
 
       <!-- Modal -->
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -66,16 +41,14 @@ body{
               <button type="button" class="btn-close hide" data-bs-dismiss="modal" aria-label="Close"></button>
 
             </div>
-
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
             </div>
           </div>
         </div>
       </div>
 </form>
-
+</div>
 
 <script src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity = "sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin = "anonymous"></script>
 <script>
