@@ -5,7 +5,7 @@ services:
   app:
     build:
       args:
-        user: leonardo
+        user: jonathan
         uid: 1000
       context: ./
       dockerfile: Dockerfile
@@ -33,56 +33,61 @@ services:
     networks:
       - docker-laravel
 
-  pgsql:
-    image: postgres:12.17
-    container_name: pgsql
-    restart: always
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./.docker/postgresql:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: ${DB_DATABASE}
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    networks:
-      - docker-laravel
+  minio:
+        image: minio/minio
+        container_name: minio
+        command: server /data --console-address ":9701"
+        restart: always
+        environment:
+            - MINIO_ROOT_USER=minioadmin
+            - MINIO_ROOT_PASSWORD=minioadmin
+        volumes:
+            - ./minio_data:/data
+        ports:
+            - 9700:9700
+            - 9701:9701
+        networks:
+            docker-laravel:
+#              ipv4_address: 172.16.238.10
+#            - docker-laravel
+#                ipv4_address: 192.168.1.10
 
-  pgadmin:
-    depends_on:
-      - pgsql
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    restart: always
-    ports:
-      - "8080:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-    networks:
-      - docker-laravel
+  pgsql:
+      image: postgres:12.17
+      container_name: pgsql
+      restart: always
+      ports:
+        - "5432:5432"
+      volumes:
+        - ./.docker/postgresql:/var/lib/postgresql/data
+      environment:
+        POSTGRES_DB: postgres
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+      networks:
+        - docker-laravel
 
   redis:
-    image: redis:latest
-    container_name: redis
-    networks:
-      - docker-laravel
+      image: redis:latest
+      container_name: redis
+      networks:
+        - docker-laravel
 
   queue:
-    build:
-      args:
-        user: leonardo
-        uid: 1000
-      context: ./
-      dockerfile: Dockerfile
-    restart: always
-    command: "php artisan queue:work"
-    volumes:
-      - ./:/var/www/
-    depends_on:
-      - redis
-    networks:
-      - docker-laravel
+      build:
+        args:
+          user: jonathan
+          uid: 1000
+        context: ./
+        dockerfile: Dockerfile
+      restart: always
+      command: "php artisan queue:work"
+      volumes:
+        - ./:/var/www/
+      depends_on:
+        - redis
+      networks:
+        - docker-laravel
 
 networks:
   docker-laravel:

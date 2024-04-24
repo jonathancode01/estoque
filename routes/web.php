@@ -1,8 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EstoqueController;
+use App\Http\Controllers\MarcasController;
+use App\Http\Controllers\ProdutoController;
 
-/*
+  /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -13,6 +16,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+  // Rotas - Criar
+Route::post('marcas',[MarcasController::class, 'store']);
+Route::post('produto', [ProdutoController::class, 'store']);
+
+  // deletar
+Route::delete('estoque/{id}', [EstoqueController::class, 'destroy']);
+Route::put('/produto/{id}', [ProdutoController::class, 'update']);
+
+
+
+  // Rotas - Mostrar as view
+Route::get('estoque',[EstoqueController::class,'index']);
+Route::get('produto', [ProdutoController::class, 'index']);
+Route::get('marcas', [MarcasController::class, 'index']);
+
+Route::get('ajaxPesquisa/{idMarca}/{idProduto}', [ProdutoController::class, 'ajaxPesquisa']);
+
+
+  // ajax
+Route::get('/produto/{marca_id}', [ProdutoController::class, 'produtosPorMarca']);
