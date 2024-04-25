@@ -15,5 +15,10 @@ class Produtos extends Model
         'valor',
     ];
 
+    public function marca()
+    {
+        return $this->belongsTo(Marcas::class, 'marca_id', 'id');
+    }
+
 use HasFactory;
 }

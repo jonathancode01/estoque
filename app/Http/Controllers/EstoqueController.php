@@ -10,8 +10,11 @@ class EstoqueController extends Controller
 {
       public function index()
       {
-          // Vou retornar os dados da tabela estoque
-          $produtos = Produtos::all();
+
+        $produtos = Produtos::select('produtos.id', 'produtos.produto', 'marcas.tipo', 'produtos.quant', 'produtos.valor')
+        // Aqui estamos fazendo um JOIN (junção) entre a tabela produtos e marcas com base em suas chaves primárias e estrangeiras.
+        ->join('marcas', 'produtos.marca_id', '=', 'marcas.id')
+        ->get();
           $marcas = Marcas::all();
 
           // criando um array pra armazenar um novo tipo de produto para o contador
@@ -27,9 +30,11 @@ class EstoqueController extends Controller
                   ->count();
           }
 
-          
+
+
+        //   dd($countTipos);
           // Passa as variáveis para a view
-          return view('estoque', compact('produtos', 'marcas', 'countTipos'));
+          return view('estoque', compact('produtos', 'marcas', 'countTipos', 'tiposUnicos'));
       }
 
     public function store(Request $request)

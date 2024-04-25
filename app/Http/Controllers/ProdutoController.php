@@ -89,6 +89,11 @@ class ProdutoController extends Controller
         ]);
           // Na tabela produtos eu faço uma busca através do id
         $produto = Produtos::findOrFail($id);
+        $produto = Produtos::findOrFail($id);
+        if (!$produto) {
+            return redirect()->back()->withErrors(['error' => 'Produto não encontrado']);
+        }
+
 
           // Atualizo os dados
         $produto->produto = $validatedData['nome_produto'];

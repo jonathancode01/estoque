@@ -48,7 +48,8 @@
           <tr>
             <th scope = "row">{{$produto->id}}</th>
             <td>{{$produto->produto}}</td>
-            <td>{{$tiposUnicos[$produto->id]}}</td>
+            <td>{{$produto->tipo}}</td>
+
             <td>{{$produto->quant}}</td>
             <td>{{$produto->valor}}</td>
             <td>
