@@ -36,3 +36,7 @@ Route::get('ajaxPesquisa/{idMarca}/{idProduto}', [ProdutoController::class, 'aja
 
   // ajax
 Route::get('/produto/{marca_id}', [ProdutoController::class, 'produtosPorMarca']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
